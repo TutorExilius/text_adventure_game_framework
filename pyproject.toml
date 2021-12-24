@@ -1,3 +1,11 @@
+[tool.black]
+exclude = '''
+/(
+  | __pycache__
+)/
+
+'''
+
 [tool.poetry]
 name = "text_adventure_game_framework"
 version = "0.1.0"
