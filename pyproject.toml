@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "text_adventure_game_framework"
+version = "0.1.0"
+description = "A text adventure game framework to create text adventures."
+authors = ["Tutor Exilius"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
