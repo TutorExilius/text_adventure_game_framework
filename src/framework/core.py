@@ -1,27 +1,8 @@
-from enum import Enum
+from pathlib import Path
 
+from loader import Loader
 
-class Player:
-    pass
-
-
-class RuleApplianceType(str, Enum):
-    ALWAYS = "always"
-    ON_TRANSITION_ACCEPTED = "accepted"
-    ON_TRANSITION_REFUSED = "refused"
-
-
-class Rule:
-    pass
-
-
-class Scene:
-    pass
-
-
-class State:
-    pass
-
-
-class Transition:
-    pass
+class Engine:
+    def __init__(self, game_path: Path):
+        self._game_path = game_path
+        self._loader = Loader(game_path)
