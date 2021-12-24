@@ -1,3 +1,4 @@
+from abc import ABC
 from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Protocol
@@ -5,7 +6,7 @@ from typing import Dict, List, Optional, Protocol
 
 class SaveGame:
     def __init__(self, save_file: Path) -> None:
-        self.save_file = save_file
+        self.save_file: Path = save_file
         self.players: Optional[Dict[str, Player]] = None
 
     def save(self) -> None:
@@ -19,17 +20,12 @@ class GameObject(Protocol):
     id: str
 
 
-class Player(GameObject):
-    def __init__(self, player_id: str, current_scene: str) -> None:
-        """Initialize Player
+class HashableGameObject(GameObject, ABC):
+    def __init__(self, id: str):
+        self.id = id
 
-        :param player_id: The ID of the Player
-        :param current_scene: Indicates in which scene player is currently located.
-        """
-
-        self.id = player_id
-        self.current_scene: str = current_scene
-        self.states: List[State] = []
+    def __hash__(self) -> int:
+        return hash(self.id)
 
 
 class RuleApplianceType(str, Enum):
@@ -38,22 +34,53 @@ class RuleApplianceType(str, Enum):
     ON_TRANSITION_REFUSED = "refused"
 
 
-class Rule(GameObject):
-    pass
+class RuleAdaption(str, Enum):
+    ADD = "add_rule"
+    SUB = "sub_rule"
 
 
-class Scene(GameObject):
-    def __init__(self, scene_id: str, title: str = "") -> None:
-        self.scene_id: str = scene_id
+class Rule(HashableGameObject):
+    def __init__(
+        self,
+        rule_id: str,
+        title: str,
+        description: str,
+        rule: Dict[
+            str, Dict[RuleAdaption, List[str]]
+        ],  # Dict[ state, Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
+        rule_appliance_type: RuleApplianceType,
+    ) -> None:
+        self.id: str = rule_id
         self.title = title
-        self.transitions: Dict[
-            str, Transition
-        ] = {}  # str("transistion_id") -> Transition()
+        self.description = description
+        self.rule: Dict[str, Dict[RuleAdaption, List[str]]] = rule
+        self.rule_appliance_type: RuleApplianceType = rule_appliance_type
 
 
-class State(GameObject):
-    pass
+class Scene(HashableGameObject):
+    def __init__(self, scene_id: str, title: str = "", description: str = "") -> None:
+        self.id: str = scene_id
+        self.title: str = title
+        self.description: str = description
+        self.transitions: List[Transition] = []
 
 
-class Transition(GameObject):
-    pass
+class Transition(HashableGameObject):
+    def __init__(self, transition_id: str) -> None:
+        self.id = transition_id
+        self.required_states: List[str] = []
+        self.transition_to_scene: Optional[Scene] = None
+        self.to_applying_rules: List[Rule] = []
+
+
+class Player(HashableGameObject):
+    def __init__(self, player_id: str, current_scene: Scene) -> None:
+        """Initialize Player
+
+        :param player_id: The ID of the Player
+        :param current_scene: Indicates in which scene player is currently located.
+        """
+
+        self.id: str = player_id
+        self.current_scene: Scene = current_scene
+        self.states: List[str] = []

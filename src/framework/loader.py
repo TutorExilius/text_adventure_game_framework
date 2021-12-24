@@ -1,23 +1,22 @@
-from collections import defaultdict
 from json import JSONEncoder
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
-from data_types import GameObject, Player, Rule, Scene, State, Transition
+from .data_types import GameObject, Player, Rule, Scene, Transition
 
 
 class BaseEncoder(JSONEncoder):
-    def default(self, o: GameObject) -> dict:
-        return o.__dict__
+    def default(self, obj: GameObject) -> dict:
+        return obj.__dict__
 
 
 class Loader:
     def __init__(self, game_path: Path):
         self.player: Dict[str, Player] = {}
-        self.rules: Dict[str, Rule] = defaultdict(list)
-        self.scenes: Dict[str, Scene] = defaultdict(list)
-        self.states: Dict[str, State] = defaultdict(list)
-        self.transitions: Dict[str, Transition] = defaultdict(list)
+        self.rules: Dict[str, Rule] = {}
+        self.scenes: Dict[str, Scene] = {}
+        self.states: List[str] = []
+        self.transitions: Dict[str, Transition] = {}
 
         self._load_game_configuration_files(game_path)
 
