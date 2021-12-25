@@ -20,7 +20,7 @@ rule = Rule(
         "You used the key and opend the door to the bathroom."
         "The key is broken by trying pulling it out,..."
     ),
-    {"has_kitchen_key": {RuleAdaption.SUB: ["has_kitchen_key"]}},
+    {("has_kitchen_key",): {RuleAdaption.SUB: ["has_kitchen_key"]}},
     RuleApplianceType.ON_TRANSITION_ACCEPTED,
 )
 

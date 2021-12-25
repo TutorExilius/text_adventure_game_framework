@@ -1,7 +1,7 @@
 from abc import ABC
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Protocol
+from typing import Dict, List, Optional, Protocol, Tuple
 
 
 class SaveGame:
@@ -27,16 +27,25 @@ class HashableGameObject(GameObject, ABC):
     def __hash__(self) -> int:
         return hash(self.id)
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.__dict__})"
+
 
 class RuleApplianceType(str, Enum):
     ALWAYS = "always"
     ON_TRANSITION_ACCEPTED = "accepted"
     ON_TRANSITION_REFUSED = "refused"
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self._value_}')"
+
 
 class RuleAdaption(str, Enum):
     ADD = "add_rule"
     SUB = "sub_rule"
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}('{self._value_}')"
 
 
 class Rule(HashableGameObject):
@@ -46,15 +55,30 @@ class Rule(HashableGameObject):
         title: str,
         description: str,
         rule: Dict[
-            str, Dict[RuleAdaption, List[str]]
-        ],  # Dict[ state, Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
+            Tuple[str], Dict[RuleAdaption, List[str]]
+        ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
         rule_appliance_type: RuleApplianceType,
     ) -> None:
         self.id: str = rule_id
         self.title = title
         self.description = description
-        self.rule: Dict[str, Dict[RuleAdaption, List[str]]] = rule
+        self.rule: Dict[Tuple[str], Dict[RuleAdaption, List[str]]] = rule
         self.rule_appliance_type: RuleApplianceType = rule_appliance_type
+
+
+class GlobalRule(Rule):
+    def __init__(
+        self,
+        rule_id: str,
+        title: str,
+        description: str,
+        rule: Dict[
+            Tuple[str], Dict[RuleAdaption, List[str]]
+        ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
+    ) -> None:
+        super(GlobalRule, self).__init__(
+            rule_id, title, description, rule, RuleApplianceType.ALWAYS
+        )
 
 
 class Scene(HashableGameObject):
@@ -84,3 +108,4 @@ class Player(HashableGameObject):
         self.id: str = player_id
         self.current_scene: Scene = current_scene
         self.states: List[str] = []
+        self.rules: List[GlobalRule] = []
