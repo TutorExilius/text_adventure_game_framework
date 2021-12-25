@@ -18,6 +18,8 @@ class SaveGame:
 
 class GameObject(Protocol):
     id: str
+    title: str
+    description: str
 
 
 class HashableGameObject(GameObject, ABC):
@@ -90,15 +92,21 @@ class Scene(HashableGameObject):
 
 
 class Transition(HashableGameObject):
-    def __init__(self, transition_id: str) -> None:
+    def __init__(
+        self, transition_id: str, title: str = "", description: str = ""
+    ) -> None:
         self.id = transition_id
+        self.title = title
+        self.description = description
         self.required_states: List[str] = []
         self.transition_to_scene: Optional[Scene] = None
         self.to_applying_rules: List[Rule] = []
 
 
 class Player(HashableGameObject):
-    def __init__(self, player_id: str, current_scene: Scene) -> None:
+    def __init__(
+        self, player_id: str, name: str, description: str, current_scene: Scene
+    ) -> None:
         """Initialize Player
 
         :param player_id: The ID of the Player
@@ -106,6 +114,15 @@ class Player(HashableGameObject):
         """
 
         self.id: str = player_id
+        self.title = name
+        self.description = description
         self.current_scene: Scene = current_scene
         self.states: List[str] = []
         self.rules: List[GlobalRule] = []
+
+
+class Room(HashableGameObject):
+    def __init__(self, room_id: str, title: str = "", description: str = "") -> None:
+        self.id = room_id
+        self.title = title
+        self.description = description

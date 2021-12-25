@@ -12,7 +12,7 @@ from framework.data_types import (
 )
 
 scene = Scene("main_scene", "The Kitchen", "You are in the kitchen, alone,..")
-player = Player("player_1", scene)
+player = Player("player_1", "Player 1", "Ein Spieler", scene)
 rule = Rule(
     "kitchen_bathroom_lost_key",
     "Key is broken by using it.",
