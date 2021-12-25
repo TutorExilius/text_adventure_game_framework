@@ -31,7 +31,7 @@ scene.transitions.append(transition)
 player.current_scene = scene
 player.states.append("has_kitchen_key")
 
-pprint(game)
+pprint(player)
 
 # rule_dict = BaseEncoder().encode(rule)
 # pprint(rule_dict)
