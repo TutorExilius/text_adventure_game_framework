@@ -10,7 +10,6 @@ from framework.data_types import (
     Scene,
     Transition,
 )
-from framework.loader import BaseEncoder
 
 scene = Scene("main_scene", "The Kitchen", "You are in the kitchen, alone,..")
 player = Player("player_1", scene)
@@ -32,8 +31,7 @@ scene.transitions.append(transition)
 player.current_scene = scene
 player.states.append("has_kitchen_key")
 
-player_dict = BaseEncoder().encode(player)
-pprint(player_dict)
+pprint(game)
 
 # rule_dict = BaseEncoder().encode(rule)
 # pprint(rule_dict)

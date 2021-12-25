@@ -2,12 +2,7 @@ from json import JSONEncoder
 from pathlib import Path
 from typing import Dict, List
 
-from .data_types import GameObject, Player, Rule, Scene, Transition
-
-
-class BaseEncoder(JSONEncoder):
-    def default(self, obj: GameObject) -> dict:
-        return obj.__dict__
+from .data_types import Player, Rule, Scene, Transition
 
 
 class Loader:
