@@ -77,10 +77,7 @@ class TransitionRule(GlobalRule):
             ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
             rule_appliance_type: RuleApplianceType,
     ) -> None:
-        super(GlobalRule, self).__init__(
-            rule_id, title, description, rule
-        )
-
+        super().__init__(rule_id, title, description, rule)
         self.rule_appliance_type: RuleApplianceType = rule_appliance_type
 
 
@@ -101,7 +98,7 @@ class Transition(HashableGameObject):
         self.description = description
         self.required_states: List[str] = []
         self.transition_to_scene: Optional[Scene] = None
-        self.to_applying_rules: List[Rule] = []
+        self.to_applying_rules: List[TransitionRule] = []
 
 
 class Player(HashableGameObject):

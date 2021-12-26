@@ -12,7 +12,8 @@ XML_HAS_ATTR_MAPPING = {
 class Loader:
     def __init__(self, game_path: Path):
         self.player: Dict[str, Player] = {}
-        self.rules: Dict[str, Rule] = {}
+        self.transition_rules: Dict[str, TransitionRule] = {}
+        self.global_rules: Dict[str, GlobalRule] = {}
         self.scenes: Dict[str, Scene] = {}
         self.states: List[str] = []
         self.transitions: Dict[str, Transition] = {}
