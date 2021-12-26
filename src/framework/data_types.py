@@ -50,32 +50,39 @@ class RuleAdaption(str, Enum):
         return f"{self.__class__.__name__}('{self._value_}')"
 
 
+class State(HashableGameObject):
+    def __init__(self, state_id: str, title: str = "", description: str = "") -> None:
+        self.id = state_id
+        self.title = title
+        self.description = description
+
+
 class GlobalRule(HashableGameObject):
     def __init__(
-            self,
-            rule_id: str,
-            title: str,
-            description: str,
-            rule: Dict[
-                Tuple[str], Dict[RuleAdaption, List[str]]
-            ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
+        self,
+        rule_id: str,
+        title: str,
+        description: str,
+        rule: Dict[
+            Tuple[State], Dict[RuleAdaption, List[State]]
+        ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
     ) -> None:
         self.id: str = rule_id
         self.title = title
         self.description = description
-        self.rule: Dict[Tuple[str], Dict[RuleAdaption, List[str]]] = rule
+        self.rule: Dict[Tuple[State], Dict[RuleAdaption, List[State]]] = rule
 
 
 class TransitionRule(GlobalRule):
     def __init__(
-            self,
-            rule_id: str,
-            title: str,
-            description: str,
-            rule: Dict[
-                Tuple[str], Dict[RuleAdaption, List[str]]
-            ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
-            rule_appliance_type: RuleApplianceType,
+        self,
+        rule_id: str,
+        title: str,
+        description: str,
+        rule: Dict[
+            Tuple[State], Dict[RuleAdaption, List[State]]
+        ],  # Dict[ List[state], Dict[ RuleAdaption(ADD|SUB), List[state] ] ]
+        rule_appliance_type: RuleApplianceType,
     ) -> None:
         super().__init__(rule_id, title, description, rule)
         self.rule_appliance_type: RuleApplianceType = rule_appliance_type
@@ -91,7 +98,7 @@ class Scene(HashableGameObject):
 
 class Transition(HashableGameObject):
     def __init__(
-            self, transition_id: str, title: str = "", description: str = ""
+        self, transition_id: str, title: str = "", description: str = ""
     ) -> None:
         self.id = transition_id
         self.title = title
@@ -103,7 +110,7 @@ class Transition(HashableGameObject):
 
 class Player(HashableGameObject):
     def __init__(
-            self, player_id: str, name: str, description: str, current_scene: Scene
+        self, player_id: str, name: str, description: str, current_scene: Scene
     ) -> None:
         """Initialize Player
 

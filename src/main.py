@@ -9,10 +9,13 @@ from framework.data_types import (
     Transition,
     TransitionRule,
     Scene,
+    State,
 )
 
 scene = Scene("main_scene", "The Kitchen", "You are in the kitchen, alone,..")
 player = Player("player_1", "Player 1", "Ein Spieler", scene)
+state = State("has_kitchen_key", "", "")
+
 rule = TransitionRule(
     "kitchen_bathroom_lost_key",
     "Key is broken by using it.",
@@ -20,7 +23,7 @@ rule = TransitionRule(
         "You used the key and opend the door to the bathroom."
         "The key is broken by trying pulling it out,..."
     ),
-    {("has_kitchen_key",): {RuleAdaption.SUB: ["has_kitchen_key"]}},
+    {(state,): {RuleAdaption.SUB: [state]}},
     RuleApplianceType.ON_TRANSITION_ACCEPTED,
 )
 
