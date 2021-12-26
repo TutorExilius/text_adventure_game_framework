@@ -1,0 +1,59 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <game>
+	<version>0.0.1</version>
+	
+	<game_objects>
+		<scene>bathroom_beside_shower</scene>
+		<transition>door_1_from_corridor_to_bathroom1</transition>
+		<transition>door_1_from_bathroom1_to_corridor</transition>
+		<global_rule></global_rule>
+		<transition_rule></transition_rule>
+	</game_objects>
+
+	<start_scene>bathroom_beside_shower</start_scene>
+	
+	<relations>
+		<has>
+			<parent>
+				<scene>bathroom_beside_shower</scene>
+			<parent>
+			<children parent_attr="transitions">
+				<transition>door_1_from_bathroom1_to_corridor</transition>
+			</children>
+		</has>
+		
+		<has>
+			<parent>
+				<scene>corridor_in_front_of_bathroom</scene>
+			<parent>
+			<children parent_attr="transitions">
+				<transition>door_1_from_corridor_to_bathroom1</transition>
+			</children>
+		</has>
+
+		<transition_to_scene>
+			<transition>door_1_from_corridor_to_bathroom1</transition>
+			<scene>bathroom_beside_shower</scene>
+		</transition_to_scene>
+		
+		<has>
+			<parent>
+				<transition>bathroom_beside_shower</transition>
+			<parent>
+			<children parent_attr="to_applying_rules">
+				<transition_rule>blabla</transition_rule>
+				<transition_rule>blubb</transition_rule>
+			</children>
+		</has>
+		
+		<has>
+			<parent>
+				<player>player_1</player>
+			<parent>
+			<children parent_attr="rules">
+				<global_rule>blabla</global_rule>
+				<global_rule>blubb</global_rule>
+			</children>
+		</has>
+	</relations>
+</game>
