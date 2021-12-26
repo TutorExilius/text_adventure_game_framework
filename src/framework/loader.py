@@ -1,7 +1,12 @@
 from pathlib import Path
 from typing import Dict, List
 
-from .data_types import Player, Rule, Scene, Transition
+from .data_types import GlobalRule, Player, Scene, Transition, TransitionRule
+
+XML_HAS_ATTR_MAPPING = {
+    (Transition.__name__, TransitionRule.__name__): "to_applying_rules",
+    (Player.__name__, GlobalRule.__name__): "rules",
+}
 
 
 class Loader:
