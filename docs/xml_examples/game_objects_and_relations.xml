@@ -17,7 +17,7 @@
 			<parent>
 				<scene>bathroom_beside_shower</scene>
 			<parent>
-			<children parent_attr="transitions">
+			<children>
 				<transition>door_1_from_bathroom1_to_corridor</transition>
 			</children>
 		</has>
@@ -26,7 +26,7 @@
 			<parent>
 				<scene>corridor_in_front_of_bathroom</scene>
 			<parent>
-			<children parent_attr="transitions">
+			<children>
 				<transition>door_1_from_corridor_to_bathroom1</transition>
 			</children>
 		</has>
@@ -40,7 +40,7 @@
 			<parent>
 				<transition>bathroom_beside_shower</transition>
 			<parent>
-			<children parent_attr="to_applying_rules">
+			<children>
 				<transition_rule>blabla</transition_rule>
 				<transition_rule>blubb</transition_rule>
 			</children>
@@ -50,7 +50,7 @@
 			<parent>
 				<player>player_1</player>
 			<parent>
-			<children parent_attr="rules">
+			<children>
 				<global_rule>blabla</global_rule>
 				<global_rule>blubb</global_rule>
 			</children>
