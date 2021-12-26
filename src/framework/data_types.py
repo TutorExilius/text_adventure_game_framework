@@ -124,3 +124,4 @@ class Room(HashableGameObject):
         self.id = room_id
         self.title = title
         self.description = description
+        self.related_scenes: List[Scene] = []
